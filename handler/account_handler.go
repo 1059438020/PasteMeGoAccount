@@ -32,7 +32,7 @@ func RegisterAccount(context *gin.Context) {
 	// 查询 Email 对应的 UID
 	basic := model.BasicInfo{Email: req.Email}
 	err = basic.Get()
-	if err != nil {
+	if err != nil && err.Error() != constant.ErrorNoRecord {
 		view.Error(context, err)
 		return
 	}
@@ -51,7 +51,7 @@ func RegisterAccount(context *gin.Context) {
 	// todo:bzy 初始化策源剩余访问次数
 	// 校验账号是否已经存在
 	uid := basic.Uid
-	account := model.Account{Uid:uid}
+	account := model.Account{Uid: uid}
 	types := []uint8{constant.AccountUsername, constant.AccountEmail}
 	accountExistFlag, err := account.ExistByUidAndType(types)
 	if err != nil {
@@ -70,7 +70,7 @@ func RegisterAccount(context *gin.Context) {
 	salt := strconv.FormatInt(time.Now().Unix(), 10)
 	password := util.EncryptionPassword(req.Password, salt)
 	accountUsername := model.Account{
-		Uid:		  uid,
+		Uid:          uid,
 		Identifier:   req.Username,
 		Credential:   password,
 		Salt:         salt,
@@ -82,7 +82,7 @@ func RegisterAccount(context *gin.Context) {
 		return
 	}
 	accountEmail := model.Account{
-		Uid:		  uid,
+		Uid:          uid,
 		Identifier:   req.Email,
 		Credential:   password,
 		Salt:         salt,

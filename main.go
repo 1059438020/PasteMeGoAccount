@@ -43,6 +43,7 @@ func initRouter() {
 	// 路由加载
 	router.LoadAccountRouter(ginRouter)
 	router.LoadPermissionRouter(ginRouter)
+	router.LoadOtherRouter(ginRouter)
 
 	err := ginRouter.Run(fmt.Sprintf("%s:%d", serverConfig.Address, serverConfig.Port))
 	if err != nil {
@@ -90,7 +91,7 @@ func initRedis() {
 	redisConfig := config.Get().Redis
 	client := redis.NewClient(&redis.Options{
 		Addr: redisConfig.Address,
-		DB: redisConfig.DB,
+		DB:   redisConfig.DB,
 	})
 
 	pong, err := client.Ping().Result()
