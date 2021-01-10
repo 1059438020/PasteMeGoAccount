@@ -1,0 +1,27 @@
+# data directory
+/data
+
+# sqlite3
+pasteme.db
+
+# config
+config.json
+
+# GoLand
+.idea
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Output of log file
+*.log
